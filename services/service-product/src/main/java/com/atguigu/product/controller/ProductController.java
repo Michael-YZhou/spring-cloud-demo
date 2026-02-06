@@ -18,7 +18,7 @@ public class ProductController {
      */
     @GetMapping("/product/{id}")
     public Product getProduct(@PathVariable("id") Long productId) {
-
+        System.out.println("商品服务收到订单请求");
         Product product = productService.getProductById(productId);
 
         return product;
