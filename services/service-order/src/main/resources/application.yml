@@ -12,7 +12,9 @@ spring:
         import-check:
           enabled: false
         namespace: {spring.profiles.active:public}
-
+logging:
+  level:
+    com.atguigu.order.feign: debug
 ---
 spring:
   config:
