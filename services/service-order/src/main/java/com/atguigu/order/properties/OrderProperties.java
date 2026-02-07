@@ -11,4 +11,5 @@ public class OrderProperties {
 
     private String timeout;
     private String autoConfirm; // nacos中属性的短横线自动映射为驼峰命名
+    private String dbUrl;
 }

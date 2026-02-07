@@ -1,6 +1,7 @@
 package com.atguigu.order.service.impl;
 
 import com.atguigu.order.bean.Order;
+import com.atguigu.order.feign.ProductFeignClient;
 import com.atguigu.order.service.OrderService;
 import com.atguigu.product.bean.Product;
 import lombok.extern.slf4j.Slf4j;
@@ -25,11 +26,16 @@ public class OrderServiceImpl implements OrderService {
     RestTemplate restTemplate;
     @Autowired // 一定要先导入 spring-cloud-starter-loadbalancer
     private LoadBalancerClient loadBalancerClient;
+    @Autowired
+    private ProductFeignClient productFeignClient;
 
     @Override
     public Order createOrder(Long productId, Long userId) {
         // 远程查询获取商品数据
-        Product product = getProductFromRemoteWithLoadBalanceAnnotation(productId);
+        // Product product = getProductFromRemoteWithLoadBalanceAnnotation(productId);
+
+        // 使用feign完成远程调用
+        Product product = productFeignClient.getProductById(productId);
 
         Order order = new Order();
 
