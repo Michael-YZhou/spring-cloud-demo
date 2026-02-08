@@ -11,6 +11,9 @@ spring:
             logger-level: full
             connect-timeout: 3000
             read-timeout: 5000
-            request-interceptors:
+#            request-interceptors:
 #              - com.atguigu.order.interceptor.XTokenRequestInterceptor
 #            retryer: feign.Retryer.Default
+feign:
+  sentinel:
+    enabled: true
