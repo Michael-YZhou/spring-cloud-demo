@@ -14,6 +14,10 @@ spring:
 #            request-interceptors:
 #              - com.atguigu.order.interceptor.XTokenRequestInterceptor
 #            retryer: feign.Retryer.Default
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+      eager: true
 feign:
   sentinel:
     enabled: true
