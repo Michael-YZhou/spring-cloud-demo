@@ -52,6 +52,15 @@ public class OrderServiceImpl implements OrderService {
         // 远程查询商品列表
         order.setProductList(Arrays.asList(product));
 
+        // 为任意代码块添加Sentinel流控规则
+//        try {
+//            SphU.entry("sentinel-resource"); // 添加Sentinel流控规则
+//
+//
+//        } catch (BlockException e) {
+//            throw new RuntimeException(e);
+//        }
+
         return order;
     }
 
