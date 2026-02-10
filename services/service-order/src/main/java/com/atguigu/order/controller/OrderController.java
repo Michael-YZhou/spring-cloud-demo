@@ -42,4 +42,15 @@ public class OrderController {
         Order order = orderService.createOrder(productId, userId);
         return order;
     }
+
+    /**
+     * 创建订单
+     */
+    @GetMapping("/seckill")
+    public Order seckill(@RequestParam("userId") Long userId,
+                             @RequestParam("productId") Long productId) {
+        Order order = orderService.createOrder(productId, userId);
+        order.setId(Long.MAX_VALUE);
+        return order;
+    }
 }

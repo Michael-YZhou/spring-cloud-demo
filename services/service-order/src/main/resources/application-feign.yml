@@ -18,6 +18,7 @@ spring:
       transport:
         dashboard: localhost:8080
       eager: true
+      web-context-unify: false # 是否分割请求链路（关闭后可开启链路流控模式）
 feign:
   sentinel:
     enabled: true
