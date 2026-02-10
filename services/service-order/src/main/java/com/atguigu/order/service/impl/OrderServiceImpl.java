@@ -1,6 +1,8 @@
 package com.atguigu.order.service.impl;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
+import com.alibaba.nacos.shaded.com.google.common.collect.Lists;
 import com.atguigu.order.bean.Order;
 import com.atguigu.order.feign.ProductFeignClient;
 import com.atguigu.order.service.OrderService;
@@ -30,7 +32,7 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private ProductFeignClient productFeignClient;
 
-    @SentinelResource(value = "createOrder")
+    @SentinelResource(value = "createOrder", blockHandler = "createOrderFallback")
     @Override
     public Order createOrder(Long productId, Long userId) {
         // 远程查询获取商品数据
@@ -49,6 +51,19 @@ public class OrderServiceImpl implements OrderService {
         order.setAddress("尚硅谷");
         // 远程查询商品列表
         order.setProductList(Arrays.asList(product));
+
+        return order;
+    }
+
+    // 用@SentinelResource标注的资源被限制时的兜底回调
+    public Order createOrder(Long productId, Long userId, BlockException e) {
+        Order order = new Order();
+        order.setId(0L);
+        order.setTotalAmount(new BigDecimal("0"));
+        order.setUserId(userId);
+        order.setNickName("位置用户");
+        order.setAddress("异常信息： " + e.getClass());
+        order.setProductList(Lists.newArrayList());
 
         return order;
     }
