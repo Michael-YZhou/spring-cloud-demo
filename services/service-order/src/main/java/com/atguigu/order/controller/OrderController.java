@@ -44,7 +44,7 @@ public class OrderController {
     }
 
     /**
-     * 创建订单
+     * 创建秒杀订单
      */
     @GetMapping("/seckill")
     public Order seckill(@RequestParam("userId") Long userId,
@@ -52,5 +52,21 @@ public class OrderController {
         Order order = orderService.createOrder(productId, userId);
         order.setId(Long.MAX_VALUE);
         return order;
+    }
+
+    /**
+     * 模拟写数据库
+     */
+    @GetMapping("/writeDb")
+    public String writeDb() {
+        return "writeDb success...";
+    }
+
+    /**
+     * 模拟读数据库
+     */
+    @GetMapping("/readDb")
+    public String readDb() {
+        return "readDb success...";
     }
 }
