@@ -1,14 +1,17 @@
 package com.atguigu.order.controller;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.atguigu.order.bean.Order;
 import com.atguigu.order.properties.OrderProperties;
 import com.atguigu.order.service.OrderService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 //@RefreshScope // Nacos自动刷新配置
+@Slf4j
 @RestController
 public class OrderController {
 
@@ -47,10 +50,19 @@ public class OrderController {
      * 创建秒杀订单
      */
     @GetMapping("/seckill")
+    @SentinelResource(value = "seckill-order", fallback = "seckillFallback")
     public Order seckill(@RequestParam("userId") Long userId,
                              @RequestParam("productId") Long productId) {
         Order order = orderService.createOrder(productId, userId);
         order.setId(Long.MAX_VALUE);
+        return order;
+    }
+
+    public Order seckillFallback(Long userId, Long productId, Throwable exception) {
+        Order order = new Order();
+        order.setId(productId);
+        order.setUserId(userId);
+        order.setAddress("秒杀失败,异常信息： " + exception.getClass());
         return order;
     }
 
@@ -67,6 +79,7 @@ public class OrderController {
      */
     @GetMapping("/readDb")
     public String readDb() {
+        log.info("readDb...");
         return "readDb success...";
     }
 }

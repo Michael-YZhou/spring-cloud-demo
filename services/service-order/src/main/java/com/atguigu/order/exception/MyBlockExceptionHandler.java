@@ -19,6 +19,7 @@ public class MyBlockExceptionHandler implements BlockExceptionHandler {
                        HttpServletResponse httpServletResponse,
                        String resourceName, BlockException e) throws Exception {
 
+        httpServletResponse.setStatus(429); // Too many requests
         httpServletResponse.setContentType("application/json;charset=utf-8");
 
         PrintWriter writer = httpServletResponse.getWriter();
