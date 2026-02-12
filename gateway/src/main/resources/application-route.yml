@@ -2,10 +2,17 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: google-route
-          uri: https://google.com
+        - id: bin-route
+          uri: https://cn.bing.com
           predicates:
-            - Path=/**
+            - name: Path
+              args:
+                pattern: /search
+            - name: Query
+              args:
+                param: q
+                regexp: haha
+            - name: Vip
           order: 10
           metadata:
             hello: world
