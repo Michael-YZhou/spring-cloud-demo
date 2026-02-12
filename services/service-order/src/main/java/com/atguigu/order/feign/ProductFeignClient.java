@@ -6,7 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(value = "service-product", fallback = ProductFeignClientFallback.class) // 发送远程调用请求的feign客户端
+@FeignClient(value = "service-product", path = "/api/product", fallback = ProductFeignClientFallback.class) // 发送远程调用请求的feign客户端
 public interface ProductFeignClient {
 
     //mvc注解的两套使用逻辑
