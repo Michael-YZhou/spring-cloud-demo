@@ -12,7 +12,7 @@ spring:
               args:
                 param: q
                 regexp: haha
-            - name: Vip
+            - Vip=user,leifengyang
           order: 10
           metadata:
             hello: world
