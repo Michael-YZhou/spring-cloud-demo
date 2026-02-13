@@ -1,6 +1,11 @@
 spring:
   cloud:
     gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
       routes:
         - id: bin-route
           uri: https://cn.bing.com
@@ -29,7 +34,7 @@ spring:
                 matchTrailingSlash: true
           filters: # /api/order/ab/c -> /ab/c
             - RewritePath=/api/order/?(?<segment>.*), /${segment}
-            - OnceToken=X-Response-Token, uuid
+            - OnceToken=X-Response-Token, jwt
           order: 1
         - id: product-route
           uri: lb://service-product
